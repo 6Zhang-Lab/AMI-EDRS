@@ -1,0 +1,5 @@
+source(file.path('scripts','bootstrap.R'),encoding='UTF-8')
+ami_need('shiny')
+root<-file.path(ami_root,'work/webapp')
+if(!file.exists(file.path(root,'VALIDATED_LOCAL_PROTOTYPE.txt')))stop('Run scripts/prepare_web.R with your actual completed model export first.')
+shiny::runApp(root,host='127.0.0.1',launch.browser=TRUE)

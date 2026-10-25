@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "Please cite the versioned software release and its archival DOI when available."
+title: "AMI-EDRS: Early physiological dynamics and mortality risk in ICU-admitted AMI"
+type: software
+authors:
+  - name: "AMI-EDRS study team"
+version: 1.0.0
+license: MIT
+keywords:
+  - acute myocardial infarction
+  - mortality prediction
+  - MIMIC-IV
+  - eICU
+  - landmark analysis

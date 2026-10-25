@@ -1,0 +1,11 @@
+order,file,purpose
+1,MIMIC_01_original.R,MIMIC cohort and item maps
+2,MIMIC_02_landmark_inputs.R,MIMIC longitudinal cache and legacy landmark inputs
+3,eICU_input_08.R,eICU paths
+4,eICU_input_06.R,eICU cohort
+5,eICU_input_07.R,eICU demographics
+6,eICU_input_03.R,eICU vital signs
+7,eICU_input_02.R,eICU laboratory measurements
+8,eICU_input_05.R,eICU support proxies
+9,eICU_input_04.R,eICU proxy cleaning
+10,eICU_input_01.R,eICU proxy correction

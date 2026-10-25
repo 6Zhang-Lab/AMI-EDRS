@@ -1,0 +1,47 @@
+run_ami_release_tests <- function(root) {
+  e<-new.env(parent=baseenv());sys.source(file.path(root,'predictor.R'),e);sys.source(file.path(root,'presentation.R'),e);sys.source(file.path(root,'app_server.R'),e)
+  api<-e$ami_api;checks<-character()
+  x<-api$read_csv(file.path(root,'synthetic_example.csv'))
+  if(nrow(x)<2L)stop('Synthetic example must contain at least two rows.')
+  for(ep in c('mortality30','hospital')){
+    z<-api$request(root,ep,x,TRUE)
+    one<-api$request(root,ep,x[1,,drop=FALSE],TRUE)
+    stopifnot(identical(z$risk_probability[1],one$risk_probability[1]),all(is.finite(z$risk_probability)))
+  }
+  checks<-c(checks,'both_endpoints_single_batch_exact')
+  shiny::testServer(e$make_ami_server(root,api),{
+    session$setInputs(endpoint='mortality30',run_demo=0,row_index=1,confirm=FALSE)
+    session$flushReact();session$setInputs(run_demo=1)
+    z<-result();stopifnot(!is.null(z),grepl('30-day',output$result_context,fixed=TRUE))
+    checks<<-c(checks,'result_card_names_30day_outcome')
+    ex<-export_results()
+    stopifnot(all(ex$synthetic_example),all(grepl('SYNTHETIC',ex$result_source,fixed=TRUE)),
+      identical(ex[names(z)],z),all(ex$risk_percent_display==sprintf('%.2f',100*z$risk_probability)))
+    checks<<-c(checks,'download_labels_synthetic_and_preserves_model_values')
+    session$setInputs(endpoint='hospital');stopifnot(is.null(result()),identical(output$result_context,''))
+    stopifnot(inherits(try(export_results(),silent=TRUE),'try-error'))
+    checks<<-c(checks,'outcome_change_clears_card_and_blocks_download')
+    session$setInputs(run_demo=2)
+    stopifnot(grepl('In-hospital',output$result_context,fixed=TRUE),all(export_results()$endpoint=='in_hospital_death_after_T48'))
+    checks<<-c(checks,'result_card_and_download_name_hospital_outcome')
+  })
+  tmp<-tempfile('ami_public_test_');dir.create(tmp);on.exit(unlink(tmp,recursive=TRUE),add=TRUE)
+  files<-c('model_30day.rds','model_hospital.rds','model_manifest.csv','synthetic_example.csv')
+  if(!all(file.copy(file.path(root,files),tmp)))stop('Cannot prepare test copy.')
+  writeLines("web_config <- list(allow_upload=FALSE,code_url='')",file.path(tmp,'web_config.R'))
+  upload<-data.frame(name='synthetic_example.csv',size=file.info(file.path(tmp,'synthetic_example.csv'))$size,
+    type='text/csv',datapath=file.path(tmp,'synthetic_example.csv'),stringsAsFactors=FALSE)
+  shiny::testServer(e$make_ami_server(tmp,api),{
+    session$setInputs(endpoint='mortality30',confirm=TRUE,row_index=1,csv=upload,predict_batch=0,run_demo=0)
+    session$flushReact();session$setInputs(predict_batch=1)
+    stopifnot(is.null(result()),grepl('uploads are disabled',message(),fixed=TRUE))
+    checks<<-c(checks,'public_mode_blocks_uploads_on_server')
+    session$setInputs(run_demo=1);stopifnot(!is.null(result()))
+    checks<<-c(checks,'public_mode_uses_frozen_model_for_demo')
+    f<-file.path(tmp,'model_30day.rds');cat('changed',file=f,append=TRUE)
+    stopifnot(inherits(try(export_results(),silent=TRUE),'try-error'),is.null(result()))
+    checks<<-c(checks,'changed_model_blocks_download_and_clears_risk')
+  })
+  stopifnot(length(checks)==8L)
+  data.frame(check=checks,status='PASS',stringsAsFactors=FALSE)
+}

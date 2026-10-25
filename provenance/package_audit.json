@@ -1,0 +1,13 @@
+{
+  "public_file_count_before_manifest": 93,
+  "r_source_files": 57,
+  "software_checks_passed": 37,
+  "production_predictor_byte_identical": true,
+  "author_graphical_abstract_byte_identical": true,
+  "contains_real_model_RDS": false,
+  "contains_patient_level_exports": false,
+  "full_cohort_rerun": false,
+  "local_relative_links_checked": true,
+  "unlisted_literal_R_dependencies": false,
+  "configuration_smoke_test": "PASS"
+}

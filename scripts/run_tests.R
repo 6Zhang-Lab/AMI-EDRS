@@ -1,0 +1,27 @@
+source(file.path('scripts','bootstrap.R'),encoding='UTF-8')
+ami_need(c('shiny','testthat'))
+source(file.path(ami_root,'tests/synthetic_fixture.R'))
+local({
+  start<-proc.time()[['elapsed']]
+  files<-list.files(ami_root,pattern='\\.[Rr]$',recursive=TRUE,full.names=TRUE)
+  files<-files[!grepl('/work/|/config/local.R$',files)]
+  for(f in files)parse(file=f,encoding='UTF-8')
+  fx<-make_synthetic_fixture(ami_root);on.exit(unlink(fx$root,recursive=TRUE))
+  e<-new.env(parent=globalenv())
+  for(f in c('tests_server.R','tests_release.R','tests_presentation.R'))sys.source(file.path(fx$root,f),e)
+  z<-rbind(e$run_ami_shiny_tests(fx$root),e$run_ami_release_tests(fx$root),e$run_ami_presentation_tests(fx$root))
+  sys.source(file.path(ami_root,'deployment/release_helpers.R'),e)
+  z<-rbind(z,e$ami_check_web_entry(fx$root))
+  stopifnot(nrow(z)==34L,all(z$status=='PASS'))
+  actual<-fx$api$request(fx$root,'mortality30',fx$input,TRUE)$risk_probability
+  stopifnot(max(abs(actual-fx$expected30))<1e-12)
+  back<-fx$api$read_csv(file.path(fx$root,'synthetic_example.csv'))
+  for(nm in names(fx$input))if(is.numeric(fx$input[[nm]]))stopifnot(identical(as.numeric(back[[nm]]),fx$input[[nm]]))
+  z<-rbind(z,data.frame(check=c('R_source_parse','known_artificial_probability','exact_tied_input_CSV_roundtrip'),status='PASS'))
+  out<-file.path(ami_root,'work/tests');dir.create(out,recursive=TRUE,showWarnings=FALSE)
+  utils::write.csv(z,file.path(out,'software_tests.csv'),row.names=FALSE)
+  capture.output(sessionInfo(),file=file.path(out,'software_test_sessionInfo.txt'))
+  print(z);cat('PASS:',nrow(z),'checks;',length(files),'R files parsed.\n')
+  cat('Synthetic software verification only. Full cohort analysis was not rerun here.\n')
+  cat('Elapsed seconds:',proc.time()[['elapsed']]-start,'\n')
+})

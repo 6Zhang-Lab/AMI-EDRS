@@ -1,0 +1,37 @@
+R version 4.3.2 (2023-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Monterey 12.3
+
+Matrix products: default
+BLAS:   /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: Asia/Shanghai
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] shiny_1.9.1
+
+loaded via a namespace (and not attached):
+ [1] sass_0.4.9         utf8_1.2.4         generics_0.1.3     shape_1.4.6.1     
+ [5] stringi_1.8.4      lattice_0.22-6     hms_1.1.3          digest_0.6.37     
+ [9] magrittr_2.0.3     grid_4.3.2         RColorBrewer_1.1-3 iterators_1.0.14  
+[13] fastmap_1.2.0      jsonlite_1.8.9     foreach_1.5.2      glmnet_4.1-8      
+[17] Matrix_1.6-5       zip_2.3.1          brio_1.1.5         DBI_1.2.3         
+[21] survival_3.7-0     promises_1.3.2     purrr_1.0.2        fansi_1.0.6       
+[25] scales_1.4.0       jquerylib_0.1.4    codetools_0.2-20   duckdb_1.3.2      
+[29] cli_3.6.5          rlang_1.1.6        splines_4.3.2      withr_3.0.2       
+[33] cachem_1.1.0       tools_4.3.2        tzdb_0.4.0         dplyr_1.1.4       
+[37] ggplot2_3.5.2      httpuv_1.6.15      vctrs_0.6.5        R6_2.5.1          
+[41] mime_0.12          lifecycle_1.0.4    fontawesome_0.5.3  cluster_2.1.7     
+[45] pkgconfig_2.0.3    bslib_0.8.0        pillar_1.9.0       openxlsx_4.2.8    
+[49] later_1.4.1        gtable_0.3.6       data.table_1.17.8  glue_1.8.0        
+[53] Rcpp_1.0.13-1      tibble_3.2.1       tidyselect_1.2.1   rstudioapi_0.17.1 
+[57] farver_2.1.2       xtable_1.8-4       htmltools_0.5.8.1  patchwork_1.3.0   
+[61] testthat_3.2.1.1   readr_2.1.5        compiler_4.3.2    

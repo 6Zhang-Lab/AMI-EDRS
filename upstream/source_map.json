@@ -1,0 +1,47 @@
+[
+  {
+    "file": "MIMIC_01_original.R",
+    "original": "01.R",
+    "source_archive": "代码.zip"
+  },
+  {
+    "file": "eICU_input_01.R",
+    "original": "Step E2D纠正2：第三类核心原始特征提取.R",
+    "source_archive": "eICU_AMI_EDRS_ExternalValidation代码.zip"
+  },
+  {
+    "file": "eICU_input_02.R",
+    "original": "Step E2C：实验室指标提取 + lab availability heatmap + lab outcome-pattern heatmap.R",
+    "source_archive": "eICU_AMI_EDRS_ExternalValidation代码.zip"
+  },
+  {
+    "file": "eICU_input_03.R",
+    "original": "Step E2B：提取 eICU T0–T72 生命体征.R",
+    "source_archive": "eICU_AMI_EDRS_ExternalValidation代码.zip"
+  },
+  {
+    "file": "eICU_input_04.R",
+    "original": "Step E2D纠正1：第三类核心原始特征提取.R",
+    "source_archive": "eICU_AMI_EDRS_ExternalValidation代码.zip"
+  },
+  {
+    "file": "eICU_input_05.R",
+    "original": "Step E2D：第三类核心原始特征提取.R",
+    "source_archive": "eICU_AMI_EDRS_ExternalValidation代码.zip"
+  },
+  {
+    "file": "eICU_input_06.R",
+    "original": "Step E1.R",
+    "source_archive": "eICU_AMI_EDRS_ExternalValidation代码.zip"
+  },
+  {
+    "file": "eICU_input_07.R",
+    "original": "Step E2A：提取人口学 + 既往病史:合并症.R",
+    "source_archive": "eICU_AMI_EDRS_ExternalValidation代码.zip"
+  },
+  {
+    "file": "eICU_input_08.R",
+    "original": "Step E0.R",
+    "source_archive": "eICU_AMI_EDRS_ExternalValidation代码.zip"
+  }
+]
